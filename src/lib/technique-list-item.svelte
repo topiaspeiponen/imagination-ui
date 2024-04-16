@@ -7,8 +7,48 @@
 
     export let technique: ImageProcessingTechniqueItem;
     export let expanded = false;
+    export let type : "slim" | "normal" = 'normal';
 </script>
 
+{#if type === 'normal'}
+    <li class="row">
+        <div class="top-container">
+            <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
+                <img src={technique.image} alt={technique.name} />
+            </div>
+            <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
+                <div class="text-container-short-content">
+                    <h2>{technique.name}</h2>
+                    <div class="action-area">
+                        <Button label="Learn more" htmlTag="anchor" href="/image-processing/{technique.slug}" />
+                        <button class="expand-button" on:click={() => expanded = !expanded}>
+                            <IconWrapper color="black">
+                                <ChevronDown />
+                            </IconWrapper>
+                            {expanded ? "Hide" : "Show"}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
+            <h2>{technique.name}</h2>
+            <div class="expanded-description">
+                <h3>How does it work?</h3>
+                <p>{technique.description}</p>
+            </div>
+            <div class="action-area">
+                <Button label="Learn more" />
+                <button class="expand-button" on:click={() => expanded = !expanded}>
+                    <IconWrapper color="black">
+                        <ChevronUp />
+                    </IconWrapper>
+                    {expanded ? "Hide" : "Show"}
+                </button>
+            </div>
+        </section>
+    </li>
+{:else if type === 'slim'}
 <li class="row">
     <div class="top-container">
         <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
@@ -19,33 +59,19 @@
                 <h2>{technique.name}</h2>
                 <div class="action-area">
                     <Button label="Learn more" htmlTag="anchor" href="/image-processing/{technique.slug}" />
-                    <button class="expand-button" on:click={() => expanded = !expanded}>
-                        <IconWrapper color="black">
-                            <ChevronDown />
-                        </IconWrapper>
-                        {expanded ? "Hide" : "Show"}
-                    </button>
                 </div>
             </div>
         </section>
     </div>
     <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
         <h2>{technique.name}</h2>
-         <div class="expanded-description">
+        <div class="expanded-description">
             <h3>How does it work?</h3>
             <p>{technique.description}</p>
         </div>
-        <div class="action-area">
-            <Button label="Learn more" />
-            <button class="expand-button" on:click={() => expanded = !expanded}>
-                <IconWrapper color="black">
-                    <ChevronUp />
-                </IconWrapper>
-                {expanded ? "Hide" : "Show"}
-            </button>
-        </div>
     </section>
 </li>
+{/if}
 
 <style>
     li {

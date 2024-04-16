@@ -1,6 +1,8 @@
 <header>
     <h1>
-        Imagination
+        <a href="/">
+            Imagination
+        </a>
     </h1>
 </header>
 
@@ -15,5 +17,9 @@
         color: rgb(var(--color-primary));
         background-color: rgb(var(--color-on-primary));
         padding: 1.5rem 0;
+    }
+    a {
+        all: unset;
+        cursor: pointer;
     }
 </style>

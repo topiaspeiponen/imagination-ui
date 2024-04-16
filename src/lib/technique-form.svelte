@@ -62,10 +62,43 @@
             Submit
         </button>
     </form>
-    {#if uploadedImg}
-        <img src={uploadedImg} alt="t"/>
-    {/if}
-    {#if imgData}
-        <img src={imgData} alt="t"/>
-    {/if}
+    <div class="image-edit-area">
+        {#if uploadedImg}
+        <figure>
+            <img
+                src={uploadedImg}
+                width="300"
+                alt="t"/>
+                <figcaption>
+                    Uploaded image
+                </figcaption>
+            </figure>
+        {/if}
+        {#if imgData}
+        <figure>
+            <img
+                src={imgData}
+                width="300"
+                alt="t"/>
+            <figcaption>
+                Your processed image
+            </figcaption>
+        </figure>
+        {/if}
+    </div>
 </section>
+
+<style>
+    .image-edit-area {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 4rem;
+        margin-top: 2rem;
+    }
+    figure {
+        all: unset;
+    }
+    figure img {
+        border: 1px solid grey;
+    }
+</style>

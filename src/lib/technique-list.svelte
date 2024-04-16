@@ -38,11 +38,12 @@
             slug: "technique-5"
         }
     ];
+    export let itemType : "slim" | "normal" = "normal";
 </script>
 
 <ul>
     {#each techniques as technique}
-        <TechniqueListItem {technique} />
+        <TechniqueListItem {technique} type={itemType} />
     {/each}
 </ul>
 
@@ -54,9 +55,6 @@
         display: flex;
         flex-flow: column nowrap;
         row-gap: 1rem;
-        margin: 0 2rem;
-        padding-right: 1rem;
-        margin-top: 2rem;
         overflow-y: auto;
     }
     
