@@ -6,7 +6,9 @@
 
 <main>
     <CtaBanner />
-    <TechniqueList />
+    <section>
+        <TechniqueList />
+    </section>
 </main>
 
 <style lang="scss">
@@ -14,6 +16,12 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
+    }
+    section {
+        overflow-y: auto;
+        padding: 1rem;
+        background-color: rgb(var(--color-background-primary));
     }
     @media (min-width: $breakpoint-md) {
         main {

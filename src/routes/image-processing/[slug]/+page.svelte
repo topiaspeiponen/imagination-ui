@@ -3,16 +3,17 @@
     import TechniqueList from "$lib/technique-list.svelte";
 
 </script>
+
 <main>
     <aside>
         <TechniqueList itemType="slim" />
     </aside>
     <TechniqueForm />
 </main>
-<style>
+
+<style lang="scss">
     main {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
+        display: block;
         max-width: 1400px;
         height: 100vh;
         margin:auto;
@@ -21,6 +22,16 @@
         padding-top: 2rem;
     }
     aside {
-        padding-right: 1rem;
+        display: none;
+    }
+    @media (min-width: $breakpoint-md) {
+        main {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
+        aside {
+            display: block;
+            padding-right: 1rem;
+        }
     }
 </style>

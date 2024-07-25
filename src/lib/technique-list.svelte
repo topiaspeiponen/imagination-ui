@@ -3,11 +3,11 @@
     import TechniqueListItem from "./technique-list-item.svelte";
     export let techniques : ImageProcessingTechniqueItem[] = [
         {
-            id: "123",
-            name: "Technique 1",
+            id: "tec-1",
+            name: "Histogram equalization",
             description: "Description of technique 1",
             image: "https://via.placeholder.com/150",
-            slug: "technique-1"
+            slug: "histogram-equalization"
         },
         {
             id: "456",
@@ -24,24 +24,25 @@
             slug: "technique-3"
         },
         {
-            id: "101",
+            id: "789",
             name: "Technique 4",
-            description: "Description of technique 4",
+            description: "Description of technique 3",
             image: "https://via.placeholder.com/150",
             slug: "technique-4"
         },
+
         {
-            id: "112",
+            id: "789",
             name: "Technique 5",
-            description: "Description of technique 5",
+            description: "Description of technique 3",
             image: "https://via.placeholder.com/150",
             slug: "technique-5"
-        }
+        },
     ];
     export let itemType : "slim" | "normal" = "normal";
 </script>
 
-<ul>
+<ul class="{itemType === 'normal' ? 'fade-in-from-right' : 'fade-in-from-left'}">
     {#each techniques as technique}
         <TechniqueListItem {technique} type={itemType} />
     {/each}
@@ -49,13 +50,20 @@
 
 <style>
     ul {
+        height: 100%;
         list-style: none;
         padding: 0;
         margin: 0;
         display: flex;
         flex-flow: column nowrap;
         row-gap: 1rem;
-        overflow-y: auto;
+        opacity: 0;
+        animation: 0.5s ease-in 0.5s fadeInRight forwards;
     }
-    
+    .fade-in-from-right {
+        animation: 0.5s ease-in 0.5s fadeInRight forwards;
+    }
+    .fade-in-from-left {
+        animation: 0.5s ease-in 0.5s fadeInLeft forwards;
+    }
 </style>

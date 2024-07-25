@@ -15,7 +15,7 @@
         justify-content: center;
         align-items: center;
         color: rgb(var(--color-primary));
-        background-color: rgb(var(--color-on-primary));
+        background-color: rgb(var(--color-background-primary));
         padding: 1.5rem 0;
     }
     a {

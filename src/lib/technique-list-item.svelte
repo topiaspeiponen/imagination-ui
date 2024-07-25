@@ -20,13 +20,23 @@
                 <div class="text-container-short-content">
                     <h2>{technique.name}</h2>
                     <div class="action-area">
-                        <Button label="Learn more" htmlTag="anchor" href="/image-processing/{technique.slug}" />
-                        <button class="expand-button" on:click={() => expanded = !expanded}>
-                            <IconWrapper color="black">
+                        <Button
+                            label="Learn more"
+                            htmlTag="anchor"
+                            anchorAttributes={{href:`/image-processing/${technique.slug}`}}
+                            />
+                        <Button
+                            variant="no-background"
+                            size="small"
+                            label={expanded ? "Hide" : "Show"}
+                            onClick={() => expanded = !expanded}>
+                            <IconWrapper
+                                slot="icon"
+                                height="24px"
+                                width="24px">
                                 <ChevronDown />
                             </IconWrapper>
-                            {expanded ? "Hide" : "Show"}
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </section>
@@ -38,13 +48,22 @@
                 <p>{technique.description}</p>
             </div>
             <div class="action-area">
-                <Button label="Learn more" />
-                <button class="expand-button" on:click={() => expanded = !expanded}>
-                    <IconWrapper color="black">
+                <Button
+                    label="Learn more"
+                    htmlTag="anchor"
+                    anchorAttributes={{href:`/image-processing/${technique.slug}`}}
+                    />
+                <Button
+                    variant="no-background"
+                    label={expanded ? "Hide" : "Show"}
+                    onClick={() => expanded = !expanded}>
+                    <IconWrapper
+                        slot="icon"
+                        height="24px"
+                        width="100%">
                         <ChevronUp />
                     </IconWrapper>
-                    {expanded ? "Hide" : "Show"}
-                </button>
+                </Button>
             </div>
         </section>
     </li>
@@ -56,15 +75,15 @@
         </div>
         <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
             <div class="text-container-short-content">
-                <h2>{technique.name}</h2>
+                <h3>{technique.name}</h3>
                 <div class="action-area">
-                    <Button label="Learn more" htmlTag="anchor" href="/image-processing/{technique.slug}" />
+                    <Button label="Learn more" htmlTag="anchor" anchorAttributes={{href:`/image-processing/${technique.slug}`}} />
                 </div>
             </div>
         </section>
     </div>
     <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
-        <h2>{technique.name}</h2>
+        <h3>{technique.name}</h3>
         <div class="expanded-description">
             <h3>How does it work?</h3>
             <p>{technique.description}</p>
@@ -77,19 +96,28 @@
     li {
         display: flex;
         flex-flow: row wrap;
-        border: 2px solid rgb(var(--color-primary));
+        border: 2px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
         border-radius: 0.5rem;
-        background-color: rgb(var(--color-on-primary));
+        background-color: rgb(var(--color-background-primary));
         color: white;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        transition:
+            box-shadow 0.2s,
+            border-image-source 1s;
+    }
+    li:hover {
+        box-shadow: 0 0 8px -2px rgb(var(--color-primary));
+    }
+    li:has(.full-width-image) {
+        border-image-source: linear-gradient(to left,#d53a9d, #743ad5);
     }
     .top-container {
         display: flex;
         flex-flow: row nowrap;
         width: 100%;
         overflow: hidden;
-        border-radius: 5px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
     }
     .full-width-image {
         width: 100%;
@@ -145,10 +173,6 @@
         flex-flow: row nowrap;
         justify-content: space-between;
         margin-top: auto;
-    }
-    .expand-button {
-        all: unset;
-        display: flex;
-        align-items: center;
+        height: 3rem;
     }
 </style>
