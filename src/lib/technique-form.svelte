@@ -5,17 +5,18 @@
     import Upload from "./icons/upload.svelte";
     import ModalImage from "./modal-image.svelte";
     import SpinningLoader from "./spinning-loader.svelte";
+    import type { ImageProcessingTechnique } from "./types";
 
-	/** @type {import('./$types').ActionData} */
-	let form;
-
+    export let title: string;
+    export let description: string;
+    export let techniqueId : ImageProcessingTechnique;
     let uploadedImg : string | undefined = undefined;
     let imgData : string | undefined = undefined;
     let loading = false;
 
     const imageUploaded = (event : Event & {
-    currentTarget: EventTarget & HTMLInputElement;
-}) => {
+        currentTarget: EventTarget & HTMLInputElement;
+    }) => {
         const file = event?.currentTarget?.files?.[0];
         if (!file) {
             return;
@@ -31,14 +32,14 @@
 
 <section>
     <h2>
-        Technique Form
+        {title}
     </h2>
     <div>
         <h3>
             How does it work?
         </h3>
         <p>
-            This is a form that allows you to submit a new image processing technique to be added to the list of techniques.
+            {description}
         </p>
     </div>
     <hr />
@@ -62,6 +63,27 @@
                 loading = false;
             };
         }}>
+        {#if techniqueId}
+        <div class="filter-mask-extra-inputs">
+            <span>
+                <label for=mask-width>Mask width</label>
+                <input type="number" id="mask-width" min=3 max=15 required />
+            </span>
+            <span>
+                <label for=mask-height>Mask height</label>
+                <input type="number" id="mask-height" min=3 max=15 required />
+            </span>
+            <span>
+                <label for="corner-handling-select">Corner handling</label>
+                <select name="corner-handling" id="corner-handling-select">
+                    <option value="fit">Fit</option>
+                    <option value="resize">Resize</option>
+                    <option value="subsituteMin">Subsitute min</option>
+                    <option value="substituteMax">Substitute max</option>
+                </select>
+            </span>
+        </div>
+        {/if}
         <input type="file" id="image" name="image" on:change={(e) => imageUploaded(e)} required />
         <Button
             buttonAttributes={
@@ -148,6 +170,16 @@
         width: 4rem;
         height: 4rem;
         color: rgb(var(--color-secondary))
+    }
+    .filter-mask-extra-inputs {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1rem;
+        width: 100%;
+    }
+    .filter-mask-extra-inputs span {
+        display: flex;
+        flex-flow: column nowrap;
     }
 
     @media (min-width: $breakpoint-md) {

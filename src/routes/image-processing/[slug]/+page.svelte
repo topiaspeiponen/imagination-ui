@@ -1,14 +1,15 @@
 <script>
     import TechniqueForm from "$lib/technique-form.svelte";
     import TechniqueList from "$lib/technique-list.svelte";
-
+    /** @type {import('./$types').PageData} */
+	export let data;
 </script>
 
 <main>
     <aside>
         <TechniqueList itemType="slim" />
     </aside>
-    <TechniqueForm />
+    <TechniqueForm title={data.title} description={data.longDescription} techniqueId={data.id} />
 </main>
 
 <style lang="scss">
