@@ -10,11 +10,11 @@
             slug: "histogram-equalization"
         },
         {
-            id: "456",
-            name: "Technique 2",
+            id: "tec-2",
+            name: "Filter mask",
             description: "Description of technique 2",
             image: "https://via.placeholder.com/150",
-            slug: "technique-2"
+            slug: "filter-mask"
         },
         {
             id: "789",

@@ -3,6 +3,7 @@ import { fail } from '@sveltejs/kit';
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
+        console.log(event)
         const data = await event.request.formData();
         const image = data.get('image');
         if (!(image instanceof File)) {
@@ -13,7 +14,7 @@ export const actions = {
             console.error('Provided image is empty');
             return fail(400, { missing: true});
         }
-		const response = await event.fetch('http://127.0.0.1:5000/equalize-histogram',{
+		const response = await event.fetch(`http://127.0.0.1:5000/${event.params.slug}`,{
             method: 'POST',
             headers: {
                 'enctype': 'multipart/form-data',
