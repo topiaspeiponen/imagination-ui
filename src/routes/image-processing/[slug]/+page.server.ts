@@ -14,6 +14,7 @@ export const actions = {
             console.error('Provided image is empty');
             return fail(400, { missing: true});
         }
+        console.log(data)
 		const response = await event.fetch(`http://127.0.0.1:5000/${event.params.slug}`,{
             method: 'POST',
             headers: {

@@ -63,22 +63,22 @@
                 loading = false;
             };
         }}>
-        {#if techniqueId}
+        {#if techniqueId == 'filter-mask'}
         <div class="filter-mask-extra-inputs">
             <span>
                 <label for=mask-width>Mask width</label>
-                <input type="number" id="mask-width" min=3 max=15 required />
+                <input name="mask_width" type="number" id="mask-width-num" min=3 max=15 required />
             </span>
             <span>
                 <label for=mask-height>Mask height</label>
-                <input type="number" id="mask-height" min=3 max=15 required />
+                <input name="mask_height" type="number" id="mask-height-num" min=3 max=15 required />
             </span>
             <span>
                 <label for="corner-handling-select">Corner handling</label>
-                <select name="corner-handling" id="corner-handling-select">
+                <select name="corner_handling" id="corner-handling-select">
                     <option value="fit">Fit</option>
                     <option value="resize">Resize</option>
-                    <option value="subsituteMin">Subsitute min</option>
+                    <option value="substituteMin">Subsitute min</option>
                     <option value="substituteMax">Substitute max</option>
                 </select>
             </span>
@@ -180,6 +180,8 @@
     .filter-mask-extra-inputs span {
         display: flex;
         flex-flow: column nowrap;
+        gap: 0.5rem;
+        width: fit-content;
     }
 
     @media (min-width: $breakpoint-md) {
