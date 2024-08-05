@@ -3,7 +3,6 @@ import { fail } from '@sveltejs/kit';
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
-        console.log(event)
         const data = await event.request.formData();
         const image = data.get('image');
         if (!(image instanceof File)) {

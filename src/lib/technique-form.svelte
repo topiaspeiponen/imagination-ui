@@ -1,11 +1,13 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import Button from "$lib/button.svelte";
+    import { afterUpdate, beforeUpdate, onMount } from "svelte";
     import IconWrapper from "./icons/icon-wrapper.svelte";
     import Upload from "./icons/upload.svelte";
     import ModalImage from "./modal-image.svelte";
     import SpinningLoader from "./spinning-loader.svelte";
     import type { ImageProcessingTechnique } from "./types";
+    import type { Action } from "@sveltejs/kit";
 
     export let title: string;
     export let description: string;
@@ -13,7 +15,8 @@
     let uploadedImg : string | undefined = undefined;
     let imgData : string | undefined = undefined;
     let loading = false;
-
+    
+    
     const imageUploaded = (event : Event & {
         currentTarget: EventTarget & HTMLInputElement;
     }) => {
@@ -28,9 +31,17 @@
         };
         reader.readAsDataURL(file);
     };
+
+    /** @type {import('svelte/action').Action<HTMLElement, string>}  */
+	function render(node : HTMLElement, techniqueId : ImageProcessingTechnique) {
+		// Component is re-rendered, empty image data
+        uploadedImg = undefined;
+        imgData = undefined;
+	}
 </script>
 
-<section>
+{#key techniqueId}
+<section use:render={techniqueId}>
     <h2>
         {title}
     </h2>
@@ -82,6 +93,13 @@
                     <option value="substituteMax">Substitute max</option>
                 </select>
             </span>
+            <span>
+                <label for="filter-type-select">Filter type</label>
+                <select name="filter_type" id="filter-type-select">
+                    <option value="median">Median</option>
+                    <option value="mean">Mean</option>
+                </select>
+            </span>
         </div>
         {/if}
         <input type="file" id="image" name="image" on:change={(e) => imageUploaded(e)} required />
@@ -120,6 +138,7 @@
         {/if}
     </div>
 </section>
+{/key}
 
 <style lang="scss">
     .image-edit-area {

@@ -2,6 +2,7 @@ import type { ImageProcessingTechniquePageData } from '$lib/types.js';
 import { error } from '@sveltejs/kit';
 
 export function load({ params }) : ImageProcessingTechniquePageData {
+    console.log(params)
     switch (params.slug){
 	    case 'histogram-equalization':
             return {
