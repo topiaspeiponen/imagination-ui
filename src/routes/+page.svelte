@@ -1,13 +1,14 @@
 <script>
     import CtaBanner from "$lib/cta-banner.svelte";
     import TechniqueList from "$lib/technique-list.svelte";
+    import techniques from "$lib/techniques";
 
 </script>
 
 <main>
     <CtaBanner />
     <section>
-        <TechniqueList />
+        <TechniqueList techniques={techniques}/>
     </section>
 </main>
 

@@ -8,6 +8,7 @@
     import SpinningLoader from "./spinning-loader.svelte";
     import type { ImageProcessingTechnique } from "./types";
     import type { Action } from "@sveltejs/kit";
+    import Error from "./icons/error.svelte";
 
     export let title: string;
     export let description: string;
@@ -15,6 +16,7 @@
     let uploadedImg : string | undefined = undefined;
     let imgData : string | undefined = undefined;
     let loading = false;
+    let error = false;
     
     
     const imageUploaded = (event : Event & {
@@ -50,7 +52,7 @@
             How does it work?
         </h3>
         <p>
-            {description}
+            {@html description}
         </p>
     </div>
     <hr />
@@ -68,10 +70,14 @@
             return async ({ result, update }) => {
                 if (result.type === "success" && typeof result.data?.image === "string") {
                     const image = result.data?.image;
+                    loading = false;
                     imgData = image;
                 }
+                else if (result.type === 'error' || result.type === 'failure') {
+                    loading = false;
+                    error = true;
+                }
                 await update();
-                loading = false;
             };
         }}>
         {#if techniqueId == 'filter-mask'}
@@ -129,6 +135,16 @@
             <ModalImage image={imgData} alt="test" />
         </div>
         {/if}
+        {#if error && !loading}
+        <div class="error-container">
+            <IconWrapper
+                height="24px"
+                width="24px">
+                <Error />
+            </IconWrapper>
+            There was an error processing the image
+        </div>
+        {/if}
         {#if loading}
         <div class="loader-container">
             <div class="loader">
@@ -141,9 +157,12 @@
 {/key}
 
 <style lang="scss">
+    h2 {
+        margin-bottom: 1rem;
+    }
     .image-edit-area {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
         align-items: center;
         gap: 4rem;
         margin-top: 2rem;
@@ -184,6 +203,15 @@
         display: flex;
         justify-content: center;
         width: 100%;
+    }
+    .error-container {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        color: rgb(var(--color-primary))
     }
     .loader {
         width: 4rem;

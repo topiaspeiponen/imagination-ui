@@ -1,44 +1,7 @@
 <script lang="ts">
-    import type { ImageProcessingTechniqueItem } from "$lib/types";
+    import type { ImageProcessingTechniquePageData } from "$lib/types";
     import TechniqueListItem from "./technique-list-item.svelte";
-    export let techniques : ImageProcessingTechniqueItem[] = [
-        {
-            id: "tec-1",
-            name: "Histogram equalization",
-            description: "Description of technique 1",
-            image: "https://via.placeholder.com/150",
-            slug: "histogram-equalization"
-        },
-        {
-            id: "tec-2",
-            name: "Filter mask",
-            description: "Description of technique 2",
-            image: "https://via.placeholder.com/150",
-            slug: "filter-mask"
-        },
-        {
-            id: "789",
-            name: "Technique 3",
-            description: "Description of technique 3",
-            image: "https://via.placeholder.com/150",
-            slug: "technique-3"
-        },
-        {
-            id: "789",
-            name: "Technique 4",
-            description: "Description of technique 3",
-            image: "https://via.placeholder.com/150",
-            slug: "technique-4"
-        },
-
-        {
-            id: "789",
-            name: "Technique 5",
-            description: "Description of technique 3",
-            image: "https://via.placeholder.com/150",
-            slug: "technique-5"
-        },
-    ];
+    export let techniques : ImageProcessingTechniquePageData[];
     export let itemType : "slim" | "normal" = "normal";
 </script>
 
@@ -46,6 +9,9 @@
     {#each techniques as technique}
         <TechniqueListItem {technique} type={itemType} />
     {/each}
+    <div class="more-to-come-notification">
+        More to come...
+    </div>
 </ul>
 
 <style>
@@ -65,5 +31,11 @@
     }
     .fade-in-from-left {
         animation: 0.5s ease-in 0.5s fadeInLeft forwards;
+    }
+    .more-to-come-notification {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
     }
 </style>

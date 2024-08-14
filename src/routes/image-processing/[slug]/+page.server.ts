@@ -13,16 +13,21 @@ export const actions = {
             console.error('Provided image is empty');
             return fail(400, { missing: true});
         }
-        console.log(data)
-		const response = await event.fetch(`http://127.0.0.1:5000/${event.params.slug}`,{
-            method: 'POST',
-            headers: {
-                'enctype': 'multipart/form-data',
-            },
-            body: data
-        });
-        const responseData = await response.json()
-        
-        return responseData;
+        try {
+            const response = await event.fetch(`${import.meta.env.VITE_API_URL}/${event.params.slug}`,{
+                method: 'POST',
+                headers: {
+                    'enctype': 'multipart/form-data',
+                    'x-api-key': import.meta.env.VITE_API_KEY
+                },
+                body: data
+            });
+            if (response.status !== 200) return fail(response.status)
+            const responseData = await response.json()
+            return responseData;
+        } catch(error) {
+            console.error(error)
+            return fail(500)
+        }
 	}
 };

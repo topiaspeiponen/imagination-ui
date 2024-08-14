@@ -1,11 +1,11 @@
 <script lang="ts">
     import Button from "$lib/button.svelte";
-    import type { ImageProcessingTechniqueItem } from "$lib/types";
+    import type { ImageProcessingTechniquePageData } from "$lib/types";
     import ChevronDown from "$lib/icons/chevron-down.svelte";
     import ChevronUp from "$lib/icons/chevron-up.svelte";
     import IconWrapper from "$lib/icons/icon-wrapper.svelte";
 
-    export let technique: ImageProcessingTechniqueItem;
+    export let technique: ImageProcessingTechniquePageData;
     export let expanded = false;
     export let type : "slim" | "normal" = 'normal';
 </script>
@@ -45,7 +45,7 @@
             <h2>{technique.name}</h2>
             <div class="expanded-description">
                 <h3>How does it work?</h3>
-                <p>{technique.description}</p>
+                <p>{technique.shortDescriptionPlainText}</p>
             </div>
             <div class="action-area">
                 <Button
@@ -86,7 +86,7 @@
         <h3>{technique.name}</h3>
         <div class="expanded-description">
             <h3>How does it work?</h3>
-            <p>{technique.description}</p>
+            <p>{technique.shortDescriptionPlainText}</p>
         </div>
     </section>
 </li>
@@ -108,7 +108,7 @@
             border-image-source 1s;
     }
     li:hover {
-        box-shadow: 0 0 8px -2px rgb(var(--color-primary));
+        box-shadow: 0 0 6px -2px rgb(var(--color-primary));
     }
     li:has(.full-width-image) {
         border-image-source: linear-gradient(to left,#d53a9d, #743ad5);

@@ -4,11 +4,11 @@
 </script>
 <header>
     <h1>
-        Improve your images with a suite of image processing methods
+        Imagination - image processing hub
     </h1>
     <hr />
     <p>
-        Blahblah blah blah blahblah Blahblah blah blah blahblah Blahblah blah blah blahblah
+        Improve your images with a suite of image processing methods
     </p>
     <Button
         label="Start editing"
