@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:3000"
+secrets:
+  api_key:
+    file:

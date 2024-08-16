@@ -14,11 +14,12 @@ export const actions = {
             return fail(400, { missing: true});
         }
         try {
+            console.log(import.meta.env)
             const response = await event.fetch(`${import.meta.env.VITE_API_URL}/${event.params.slug}`,{
                 method: 'POST',
                 headers: {
                     'enctype': 'multipart/form-data',
-                    'x-api-key': import.meta.env.VITE_API_KEY
+                    'x-api-key': import.meta.env.API_KEY
                 },
                 body: data
             });
