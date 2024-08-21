@@ -20,11 +20,13 @@ This repository contains the code for a Sveltekit app for the Imagination web ap
 There are a few ways to preview the production build, depending on how extensively you wish to mimic production.
 
 1. Local production build with Vite
+
 Create a production version of your app:
 ```npm run build```
 You can preview the production build with `npm run preview`, which uses Vite.
 
 2. Local production build with Node
+
 First make sure you have a ```.env.production``` file with appropriate values.
 
 Create a production version of your app:
