@@ -1,4 +1,5 @@
 import { fail } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -14,12 +15,11 @@ export const actions = {
             return fail(400, { missing: true});
         }
         try {
-            console.log(import.meta.env)
-            const response = await event.fetch(`${import.meta.env.VITE_API_URL}/${event.params.slug}`,{
+            const response = await event.fetch(`${env.API_URL}/${event.params.slug}`,{
                 method: 'POST',
                 headers: {
                     'enctype': 'multipart/form-data',
-                    'x-api-key': import.meta.env.API_KEY
+                    'x-api-key': env.API_KEY
                 },
                 body: data
             });

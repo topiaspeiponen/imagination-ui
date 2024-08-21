@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "node", "build" ]
+CMD ORIGIN=$ORIGIN node build
