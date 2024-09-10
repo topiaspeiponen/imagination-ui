@@ -3,7 +3,10 @@
 This repository contains the code for a Sveltekit app for the Imagination web app.
 
 The app can be previewed at https://imagination-ui.calmdesert-0db5aa99.northeurope.azurecontainerapps.io
+
 NOTE: Since this is a hobby project, the container app is by default not running in order to save costs. This means that the first time visit there will be a 15-20 sec wait time while the containers are started.
+
+The backend for this app can be seen at https://github.com/topiaspeiponen/imagination-backend
 
 ## Overall app architecture
 
