@@ -6,9 +6,11 @@
     import Upload from "./icons/upload.svelte";
     import ModalImage from "./modal-image.svelte";
     import SpinningLoader from "./spinning-loader.svelte";
-    import type { ImageProcessingTechnique } from "./types";
+    import type { ImageProcessingTechnique, SelectOption } from "./types";
     import type { Action } from "@sveltejs/kit";
     import Error from "./icons/error.svelte";
+    import Input from "./input.svelte";
+    import Select from "./select.svelte";
 
     export let title: string;
     export let description: string;
@@ -17,6 +19,18 @@
     let imgData : string | undefined = undefined;
     let loading = false;
     let error = false;
+
+    const filterMaskOptions : SelectOption = {
+        fit: 'Fit',
+        resize: 'Resize',
+        substituteMin: 'Substitute min',
+        substituteMax: 'Substitute max'
+    }
+
+    const filterTypeOptions : SelectOption = {
+        median: 'Median',
+        mean: 'Mean'
+    }
     
     
     const imageUploaded = (event : Event & {
@@ -43,7 +57,7 @@
 </script>
 
 {#key techniqueId}
-<section use:render={techniqueId}>
+<div use:render={techniqueId}>
     <h2>
         {title}
     </h2>
@@ -84,27 +98,18 @@
         <div class="filter-mask-extra-inputs">
             <span>
                 <label for=mask-width>Mask width</label>
-                <input name="mask_width" type="number" id="mask-width-num" min=3 max=15 required />
+
+                <Input inputAttributes={{name: "mask_width", type: "number", id:"mask-height-num", min:3, max: 15, required: true }}/>
             </span>
             <span>
                 <label for=mask-height>Mask height</label>
-                <input name="mask_height" type="number" id="mask-height-num" min=3 max=15 required />
+                <Input inputAttributes={{name: "mask_height", type: "number", id:"mask-height-num", min:3, max: 15, required: true }}/>
             </span>
             <span>
-                <label for="corner-handling-select">Corner handling</label>
-                <select name="corner_handling" id="corner-handling-select">
-                    <option value="fit">Fit</option>
-                    <option value="resize">Resize</option>
-                    <option value="substituteMin">Subsitute min</option>
-                    <option value="substituteMax">Substitute max</option>
-                </select>
+                <Select selectLabel="Corner handling" placeholder="Select corner handling" selectOptions={filterMaskOptions} />
             </span>
             <span>
-                <label for="filter-type-select">Filter type</label>
-                <select name="filter_type" id="filter-type-select">
-                    <option value="median">Median</option>
-                    <option value="mean">Mean</option>
-                </select>
+                <Select selectLabel="Filter type" placeholder="Select filter type" selectOptions={filterTypeOptions} />
             </span>
         </div>
         {/if}
@@ -153,7 +158,7 @@
         </div>
         {/if}
     </div>
-</section>
+</div>
 {/key}
 
 <style lang="scss">
@@ -173,6 +178,10 @@
         gap: 1rem;
         align-items: center;
         margin-top: 1rem;
+    }
+    hr {
+        border: unset;
+        border-bottom: 2px solid rgb(var(--color-primary-accent))
     }
     input::-webkit-file-upload-button {
         all: unset;

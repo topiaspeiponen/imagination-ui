@@ -32,7 +32,7 @@
         padding-right: 5rem;
     }
     h1 {
-        color: rgb(var(--color-primary));
+        color: rgb(var(--color-on-background-primary));
     }
     p {
         opacity: 0;

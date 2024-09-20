@@ -4,14 +4,16 @@
     import ChevronDown from "$lib/icons/chevron-down.svelte";
     import ChevronUp from "$lib/icons/chevron-up.svelte";
     import IconWrapper from "$lib/icons/icon-wrapper.svelte";
+    import { page } from "$app/stores";
 
     export let technique: ImageProcessingTechniquePageData;
     export let expanded = false;
     export let type : "slim" | "normal" = 'normal';
+
 </script>
 
 {#if type === 'normal'}
-    <li class="row">
+    <li class="row full">
         <div class="top-container">
             <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
                 <img src={technique.image} alt={technique.name} />
@@ -68,27 +70,26 @@
         </section>
     </li>
 {:else if type === 'slim'}
-<li class="row">
-    <div class="top-container">
-        <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
-            <img src={technique.image} alt={technique.name} />
-        </div>
-        <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
-            <div class="text-container-short-content">
-                <h3>{technique.name}</h3>
-                <div class="action-area">
-                    <Button label="Learn more" htmlTag="anchor" anchorAttributes={{href:`/image-processing/${technique.slug}`}} />
+<li class="row slim">
+    <a href="/image-processing/{technique.slug}" aria-disabled="{$page.params.slug === technique.slug}">
+        <div class="top-container">
+            <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
+                <img src={technique.image} alt={technique.name} />
+            </div>
+            <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
+                <div class="text-container-short-content">
+                    <h3>{technique.name}</h3>
                 </div>
+            </section>
+        </div>
+        <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
+            <h3>{technique.name}</h3>
+            <div class="expanded-description">
+                <h3>How does it work?</h3>
+                <p>{technique.shortDescriptionPlainText}</p>
             </div>
         </section>
-    </div>
-    <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
-        <h3>{technique.name}</h3>
-        <div class="expanded-description">
-            <h3>How does it work?</h3>
-            <p>{technique.shortDescriptionPlainText}</p>
-        </div>
-    </section>
+    </a>
 </li>
 {/if}
 
@@ -102,16 +103,30 @@
         border-radius: 0.5rem;
         background-color: rgb(var(--color-background-primary));
         color: white;
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
         transition:
+            transform 0.25s,
             box-shadow 0.2s,
             border-image-source 1s;
     }
-    li:hover {
-        box-shadow: 0 0 6px -2px rgb(var(--color-primary));
+    .full:hover {
+        box-shadow: 0 1px 3px 0 rgb(var(--color-primary)), 0 1px 2px -1px rgb(var(--color-primary));
     }
-    li:has(.full-width-image) {
+    .full:has(.full-width-image) {
         border-image-source: linear-gradient(to left,#d53a9d, #743ad5);
+    }
+    .slim a {
+        all: unset;
+        width: 100%;
+        cursor: pointer;
+    }
+    .slim:has(a[aria-disabled=false]):hover {
+        transform: scale(1.02);
+    }
+    .slim a[aria-disabled=true] {
+        pointer-events: none;
+        background-color: rgb(var(--color-primary));
+        color: rgb(var(--color-on-primary))
     }
     .top-container {
         display: flex;

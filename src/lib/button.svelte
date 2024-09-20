@@ -5,7 +5,7 @@
     export let anchorAttributes : HTMLAnchorAttributes | undefined = undefined;
     export let variant : 'primary' | 'secondary' | 'no-background' = 'primary';
     export let iconPlacement : 'left' | 'right' | undefined = 'right';
-    export let label = 'Click me';
+    export let label = '';
     export let htmlTag : 'anchor' | 'button' = 'button';
     export let size : 'normal' | 'small' = 'normal';
     export let onClick = () => console.log('Button clicked');
@@ -31,6 +31,9 @@
     </button>
 {/if}
 <style>
+    button:hover {
+        cursor: pointer;
+    }
     .button.left {
         display: flex;
         gap: 0.25rem;
@@ -47,7 +50,7 @@
         color: black;
         font-weight: 600;
         border: none;
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
         cursor: pointer;
         width: fit-content;
         transition-property: all;
