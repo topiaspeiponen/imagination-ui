@@ -21,6 +21,7 @@
     });
 </script>
 
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <label use:melt={$label}>{selectLabel}</label>
 <button class="select-field" use:melt={$trigger}>
     <span>{$selectedLabel || placeholder}</span>
