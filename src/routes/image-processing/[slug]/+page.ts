@@ -4,7 +4,6 @@ import type { PageLoadEvent } from './$types';
 import techniques from '$lib/techniques';
 
 export function load({ params } : PageLoadEvent) : ImageProcessingTechniquePageData | undefined {
-    console.log(params)
     switch (params.slug){
 	    case 'histogram-equalization':
             return techniques.find(tech => tech.id === 'histogram-equalization');

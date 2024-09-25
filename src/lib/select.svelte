@@ -2,16 +2,23 @@
     import { createSelect, melt } from "@melt-ui/svelte";
     import IconWrapper from "./icons/icon-wrapper.svelte";
     import ChevronDown from "./icons/chevron-down.svelte";
+    import { type Writable } from "svelte/store";
 
+    export let selected : Writable<{
+        value: string;
+        label: string;
+    }>
     export let selectOptions: { [key: string]: string };
     export let selectLabel: string;
     export let placeholder: string;
+
 
     const {
         elements: { trigger, menu, option, group, groupLabel, label },
         states: { selectedLabel, open },
         helpers: { isSelected },
     } = createSelect<string>({
+        selected: selected,
         forceVisible: true,
         positioning: {
             placement: "bottom",

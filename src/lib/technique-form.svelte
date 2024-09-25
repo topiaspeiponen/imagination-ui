@@ -1,16 +1,17 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import Button from "$lib/button.svelte";
-    import { afterUpdate, beforeUpdate, onMount } from "svelte";
     import IconWrapper from "./icons/icon-wrapper.svelte";
     import Upload from "./icons/upload.svelte";
     import ModalImage from "./modal-image.svelte";
     import SpinningLoader from "./spinning-loader.svelte";
-    import type { ImageProcessingTechnique, SelectOption } from "./types";
-    import type { Action } from "@sveltejs/kit";
+    import type { ImageProcessingTechnique } from "./types";
+    import type { FilterMaskForm, FormSelect, SelectOption, SvelteFormData} from "./form-types";
     import Error from "./icons/error.svelte";
     import Input from "./input.svelte";
     import Select from "./select.svelte";
+    import { get, writable } from "svelte/store";
+    import { filterMaskFormSchema } from "./validation-schemas";
 
     export let title: string;
     export let description: string;
@@ -19,8 +20,8 @@
     let imgData : string | undefined = undefined;
     let loading = false;
     let error = false;
-
-    const filterMaskOptions : SelectOption = {
+    
+    const cornerHandlingOptions : SelectOption = {
         fit: 'Fit',
         resize: 'Resize',
         substituteMin: 'Substitute min',
@@ -31,7 +32,35 @@
         median: 'Median',
         mean: 'Mean'
     }
-    
+
+    let form : SvelteFormData<FilterMaskForm> = {
+        values: {
+            mask_width: 3,
+            mask_height: 3,
+            corner_handling: cornerHandlingOptions.fit,
+            filter_type: filterTypeOptions.median,
+            corner_handling_select: writable({
+                label: cornerHandlingOptions.fit,
+                value: Object.keys(cornerHandlingOptions).find((key) => key === 'fit') || ''
+            }),
+            filter_type_select: writable({
+                label: filterTypeOptions.median,
+                value: Object.keys(filterTypeOptions).find((key) => key === 'median') || ''
+            }),
+        },
+        errors: {}
+    };
+
+    const parseFormData = (values: FilterMaskForm) : FilterMaskForm => {
+        const parsed = {
+            ...values,
+            corner_handling: values.corner_handling_select ? get(values.corner_handling_select).value : '',
+            filter_type: values.filter_type_select ? get(values.filter_type_select).value : ''
+        };
+        delete parsed.corner_handling_select;
+        delete parsed.filter_type_select;
+        return parsed;
+    }
     
     const imageUploaded = (event : Event & {
         currentTarget: EventTarget & HTMLInputElement;
@@ -50,7 +79,6 @@
 
     /** @type {import('svelte/action').Action<HTMLElement, string>}  */
 	function render(node : HTMLElement, techniqueId : ImageProcessingTechnique) {
-		// Component is re-rendered, empty image data
         uploadedImg = undefined;
         imgData = undefined;
 	}
@@ -73,8 +101,20 @@
     <form
         method="POST"
         enctype="multipart/form-data"
-        use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+        use:enhance={({ formData, cancel }) => {
+            const parsedFormData = parseFormData(form.values)
+            const validationResults = filterMaskFormSchema.safeParse(parsedFormData);
+
+            if (validationResults.error) {
+                console.error('Errors detected, cancel submission');
+                cancel();
+                return;
+            }
             loading = true;
+            
+            Object.entries(parsedFormData).forEach((entry) => {
+                formData.append(entry[0], entry[1].toString())
+            })
             // `formElement` is this `<form>` element
             // `formData` is its `FormData` object that's about to be submitted
             // `action` is the URL to which the form is posted
@@ -98,18 +138,21 @@
         <div class="filter-mask-extra-inputs">
             <span>
                 <label for=mask-width>Mask width</label>
-
-                <Input inputAttributes={{name: "mask_width", type: "number", id:"mask-height-num", min:3, max: 15, required: true }}/>
+                <Input inputAttributes={{type: "number", id:"mask-height-num", min:3, max: 15, required: true, "bind:value": form.values['mask_width'] }}/>
             </span>
             <span>
                 <label for=mask-height>Mask height</label>
-                <Input inputAttributes={{name: "mask_height", type: "number", id:"mask-height-num", min:3, max: 15, required: true }}/>
+                <Input inputAttributes={{type: "number", id:"mask-height-num", min:3, max: 15, required: true, "bind:value": form.values['mask_height'] }}/>
             </span>
             <span>
-                <Select selectLabel="Corner handling" placeholder="Select corner handling" selectOptions={filterMaskOptions} />
+                {#if form.values['corner_handling_select']}
+                <Select selected={form.values['corner_handling_select']} selectLabel="Corner handling" placeholder="Select corner handling" selectOptions={cornerHandlingOptions} />
+                {/if}
             </span>
             <span>
-                <Select selectLabel="Filter type" placeholder="Select filter type" selectOptions={filterTypeOptions} />
+                {#if form.values['filter_type_select']}
+                <Select selected={form.values['filter_type_select']}  selectLabel="Filter type" placeholder="Select filter type" selectOptions={filterTypeOptions} />
+                {/if}
             </span>
         </div>
         {/if}

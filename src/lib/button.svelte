@@ -8,7 +8,7 @@
     export let label = '';
     export let htmlTag : 'anchor' | 'button' = 'button';
     export let size : 'normal' | 'small' = 'normal';
-    export let onClick = () => console.log('Button clicked');
+    export let onClick: (() => void) | undefined = undefined;
 
     let classes = `button ${iconPlacement || ''} ${size === 'normal' ? 'normal-size' : 'small-size'} ${variant}`;
 </script>

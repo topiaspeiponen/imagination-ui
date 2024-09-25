@@ -8,5 +8,3 @@ export type ImageProcessingTechniquePageData = {
     slug: string;
     image: string;
 }
-
-export type SelectOption = {[key: string]: string};
