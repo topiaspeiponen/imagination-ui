@@ -1,12 +1,9 @@
 <script lang="ts">
-    import Button from "$lib/button.svelte";
     import Header from "$lib/header.svelte";
-    import ArrowBack from "$lib/icons/arrow-back.svelte";
     import IconWrapper from "$lib/icons/icon-wrapper.svelte";
     import TechniqueForm from "$lib/technique-form.svelte";
     import TechniqueList from "$lib/technique-list.svelte";
     import techniques from "$lib/techniques";
-    import { tweened } from "svelte/motion";
     import { fade, slide } from "svelte/transition";
     import { page } from "$app/stores";
     

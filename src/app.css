@@ -17,6 +17,7 @@ body {
     --color-secondary: 77, 24, 219;
     --color-on-secondary: 255, 255, 255;
 
+    --color-disabled: 60, 60, 60;
     --color-light-grey: 88, 88, 88;
 
     --header-height: 100px;

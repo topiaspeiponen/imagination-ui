@@ -77,8 +77,7 @@
         reader.readAsDataURL(file);
     };
 
-    /** @type {import('svelte/action').Action<HTMLElement, string>}  */
-	function render(node : HTMLElement, techniqueId : ImageProcessingTechnique) {
+	function render(_node : HTMLElement, _techniqueId : ImageProcessingTechnique) {
         uploadedImg = undefined;
         imgData = undefined;
 	}
@@ -102,6 +101,7 @@
         method="POST"
         enctype="multipart/form-data"
         use:enhance={({ formData, cancel }) => {
+            // Validate formdata
             const parsedFormData = parseFormData(form.values)
             const validationResults = filterMaskFormSchema.safeParse(parsedFormData);
 
@@ -115,16 +115,12 @@
             Object.entries(parsedFormData).forEach((entry) => {
                 formData.append(entry[0], entry[1].toString())
             })
-            // `formElement` is this `<form>` element
-            // `formData` is its `FormData` object that's about to be submitted
-            // `action` is the URL to which the form is posted
-            // calling `cancel()` will prevent the submission
-            // `submitter` is the `HTMLElement` that caused the form to be submitted
 
             return async ({ result, update }) => {
                 if (result.type === "success" && typeof result.data?.image === "string") {
                     const image = result.data?.image;
                     loading = false;
+                    error = false;
                     imgData = image;
                 }
                 else if (result.type === 'error' || result.type === 'failure') {
@@ -159,7 +155,10 @@
         <input type="file" id="image" name="image" on:change={(e) => imageUploaded(e)} required />
         <Button
             buttonAttributes={
-                {type:"submit"}
+                {
+                    type:"submit",
+                    disabled: loading
+                }
             }
             size="small"
             label="Submit"

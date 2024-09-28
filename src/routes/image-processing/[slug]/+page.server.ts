@@ -1,11 +1,9 @@
 import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
-/** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
         const data = await event.request.formData();
-        console.log(data)
         const image = data.get('image');
         if (!(image instanceof File)) {
             console.error('Provided image is not of type file')

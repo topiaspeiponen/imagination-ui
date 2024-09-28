@@ -31,7 +31,10 @@
     </button>
 {/if}
 <style>
-    button:hover {
+    .button:disabled {
+        background-color: rgb(var(--color-disabled));
+    }
+    .button:hover:not(:disabled) {
         cursor: pointer;
     }
     .button.left {
@@ -51,7 +54,6 @@
         font-weight: 600;
         border: none;
         border-radius: 0.25rem;
-        cursor: pointer;
         width: fit-content;
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -64,7 +66,6 @@
         font-weight: 600;
         border: none;
         border-radius: 0.5rem;
-        cursor: pointer;
         width: fit-content;
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -81,11 +82,11 @@
     .small-size {
         padding: 0.5rem 1rem;
     }
-    .primary:hover {
+    .primary:hover:not(:disabled) {
         background-color: rgb(var(--color-secondary));
         color: rgb(var(--color-on-secondary));
     }
-    .primary:active {
+    .primary:active:not(:disabled) {
         background-color: rgba(var(--color-secondary), 0.75);
     }
     button:focus {
