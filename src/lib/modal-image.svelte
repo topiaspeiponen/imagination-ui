@@ -84,7 +84,7 @@
         width: 100%;
     }
     .dialog-image-container img {
-        object-fit: none;
+        object-fit: contain;
         width: 100%;
         height: 100%;
     }

@@ -8,7 +8,7 @@ export type SvelteFormData<TValues extends Record<string, string | number | Form
     values: TValues;
     errors: {
         [K in keyof TValues]?: {
-            type: string;
+            type?: string;
             message: string;
         }
     }

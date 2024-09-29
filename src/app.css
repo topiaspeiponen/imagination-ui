@@ -19,6 +19,7 @@ body {
 
     --color-disabled: 60, 60, 60;
     --color-light-grey: 88, 88, 88;
+    --color-error: 239, 68, 68;
 
     --header-height: 100px;
     --breakpoint-desktop: 1400px;

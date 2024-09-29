@@ -39,6 +39,7 @@
 <style lang="scss">
     main {
         display: flex;
+        margin-bottom: 4rem;
     }
     aside {
         position: absolute;
