@@ -2,7 +2,7 @@
 
 This repository contains the code for a Sveltekit app for the Imagination web app.
 
-The app can be previewed at https://imagination-ui.calmdesert-0db5aa99.northeurope.azurecontainerapps.io
+The app can be previewed at https://imagination-ui.delightfulmoss-31180389.northeurope.azurecontainerapps.io
 
 NOTE: Since this is a hobby project, the container app is by default not running in order to save costs. This means that the first time visit there will be a 15-20 sec wait time while the containers are started.
 
@@ -48,5 +48,16 @@ Run the app using a Node server
 3. Production build using Docker
 - Requires Docker Desktop
 
-Build image and run the container with one command
-```ORIGIN=http://localhost:3000 docker compose up -d```
+1. Build the container
+
+```docker build -f Dockerfile -t imagination-ui-image .```
+
+2. (Optional, only if you wish to also dockerize back-end) Create a [Docker network](https://docs.docker.com/engine/network/)
+
+```docker network create my-network ```
+
+3. Run the container 
+
+```docker run -p 3000:3000 --env-file .env.production -d imagination-ui-image```
+or with network
+```docker run --network=my-network -p 3000:3000 --env-file .env.production -d imagination-ui-image```
