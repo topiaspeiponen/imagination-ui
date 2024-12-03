@@ -28,7 +28,7 @@
     .more-to-come-notification {
         display: flex;
         justify-content: center;
-        margin-top: 3rem;
-        margin-bottom: 3rem;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
     }
 </style>

@@ -14,7 +14,6 @@ export const actions = {
             return fail(400, { missing: true});
         }
         try {
-            console.log("env ", env.API_URL, env.API_KEY)
             const response = await event.fetch(`${env.API_URL}/${event.params.slug}`,{
                 method: 'POST',
                 headers: {

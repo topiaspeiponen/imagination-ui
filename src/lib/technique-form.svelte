@@ -127,7 +127,6 @@
                 >;
                 const message =
                     validationResults.error.formErrors.fieldErrors[key];
-                console.log(key, message);
                 form = {
                     ...form,
                     errors: {
@@ -177,11 +176,11 @@
 </script>
 
 {#key techniqueId}
-    <div use:render={techniqueId}>
+    <div class="technique-container" use:render={techniqueId}>
         <h2>
             {title}
         </h2>
-        <div>
+        <div class="technique-description">
             <h3>How does it work?</h3>
             <p>
                 {@html description}
@@ -280,7 +279,7 @@
                     disabled: loading,
                 }}
                 size="small"
-                label="Submit"
+                label="Process image"
                 iconPlacement="right"
             >
                 <IconWrapper slot="icon" height="24px" width="24px">
@@ -330,6 +329,13 @@
     h2 {
         margin-bottom: 1rem;
     }
+    .technique-container {
+        padding: 0 1rem;
+    }
+    :global(.technique-description li) {
+        margin: 0.5rem 0;
+    }
+           
     .image-edit-area {
         display: flex;
         flex-flow: row nowrap;

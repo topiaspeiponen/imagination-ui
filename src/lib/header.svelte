@@ -34,9 +34,10 @@
     </h1>
 </header>
 
-<style>
+<style lang="scss">
     header {
-        position: relative;
+        position: fixed;
+        width: 100%;
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;

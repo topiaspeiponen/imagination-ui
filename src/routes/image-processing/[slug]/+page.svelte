@@ -42,23 +42,30 @@
         margin-bottom: 4rem;
     }
     aside {
-        position: absolute;
+        position: fixed;
         box-sizing: border-box;
+        top: var(--header-height);
         padding: 1rem;
         background-color:rgb(var(--color-surface-dim));
-        width: 500px;
-        height: calc(100vh - var(--header-height));
+        width: 100%;
+        height: 100%;
         z-index: 10;
     }
+    @media (min-width: $breakpoint-md) {
+        aside {
+            width: 500px;
+        }
+    }
     .overlay {
-        position: absolute;
+        position: fixed;
         background-color: rgba(var(--color-background-primary), 0.5);
+        top: var(--header-height);
         z-index: 9;
         width: 100%;
         height: 100%;
     }
     section {
-        margin-top: 2rem;
+        margin-top: calc(2rem +  var(--header-height));
         margin-left: auto;
         margin-right: auto;
         width: 800px;

@@ -8,34 +8,42 @@
 
     export let technique: ImageProcessingTechniquePageData;
     export let expanded = false;
-    export let type : "slim" | "normal" = 'normal';
-
+    export let type: "slim" | "normal" = "normal";
 </script>
 
-{#if type === 'normal'}
+{#if type === "normal"}
     <li class="row full">
         <div class="top-container">
-            <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
+            <div
+                class="technique-item image-container {expanded
+                    ? 'full-width-image'
+                    : 'half-width-image'}"
+            >
                 <img src={technique.image} alt={technique.name} />
             </div>
-            <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
+            <section
+                class="technique-item text-container-short {expanded
+                    ? 'hidden'
+                    : 'visible'}"
+            >
                 <div class="text-container-short-content">
                     <h2>{technique.name}</h2>
+                    <p>{technique.shortDescriptionPlainText}</p>
                     <div class="action-area">
                         <Button
-                            label="Learn more"
+                            label="Go to"
                             htmlTag="anchor"
-                            anchorAttributes={{href:`/image-processing/${technique.slug}`}}
-                            />
+                            anchorAttributes={{
+                                href: `/image-processing/${technique.slug}`,
+                            }}
+                        />
                         <Button
                             variant="no-background"
                             size="small"
                             label={expanded ? "Hide" : "Show"}
-                            onClick={() => expanded = !expanded}>
-                            <IconWrapper
-                                slot="icon"
-                                height="24px"
-                                width="24px">
+                            onClick={() => (expanded = !expanded)}
+                        >
+                            <IconWrapper slot="icon" height="24px" width="24px">
                                 <ChevronDown />
                             </IconWrapper>
                         </Button>
@@ -43,57 +51,73 @@
                 </div>
             </section>
         </div>
-        <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
+        <section
+            class="technique-item text-container-long {expanded
+                ? 'visible'
+                : 'hidden'}"
+        >
             <h2>{technique.name}</h2>
             <div class="expanded-description">
                 <h3>How does it work?</h3>
-                <p>{technique.shortDescriptionPlainText}</p>
+                <p>{@html technique.longDescriptionHtml}</p>
             </div>
             <div class="action-area">
                 <Button
-                    label="Learn more"
+                    label="Start"
                     htmlTag="anchor"
-                    anchorAttributes={{href:`/image-processing/${technique.slug}`}}
-                    />
+                    anchorAttributes={{
+                        href: `/image-processing/${technique.slug}`,
+                    }}
+                />
                 <Button
                     variant="no-background"
                     label={expanded ? "Hide" : "Show"}
-                    onClick={() => expanded = !expanded}>
-                    <IconWrapper
-                        slot="icon"
-                        height="24px"
-                        width="100%">
+                    onClick={() => (expanded = !expanded)}
+                >
+                    <IconWrapper slot="icon" height="24px" width="100%">
                         <ChevronUp />
                     </IconWrapper>
                 </Button>
             </div>
         </section>
     </li>
-{:else if type === 'slim'}
-<li class="row slim">
-    <a href="/image-processing/{technique.slug}" aria-disabled="{$page.params.slug === technique.slug}">
-        <div class="top-container">
-            <div class="technique-item image-container {expanded ? 'full-width-image' : 'half-width-image'}">
-                <img src={technique.image} alt={technique.name} />
+{:else if type === "slim"}
+    <li class="row slim">
+        <a
+            href="/image-processing/{technique.slug}"
+            aria-disabled={$page.params.slug === technique.slug}
+        >
+            <div class="top-container">
+                <div class="technique-item image-container half-width-image">
+                    <img src={technique.image} alt={technique.name} />
+                </div>
+                <section
+                    class="technique-item text-container-short {expanded
+                        ? 'hidden'
+                        : 'visible'}"
+                >
+                    <div class="text-container-short-content">
+                        <h3>{technique.name}</h3>
+                        <p>{technique.shortDescriptionPlainText}</p>
+                    </div>
+                </section>
             </div>
-            <section class="technique-item text-container-short {expanded ? 'hidden' : 'visible'}">
-                <div class="text-container-short-content">
-                    <h3>{technique.name}</h3>
+            <section
+                class="technique-item text-container-long {expanded
+                    ? 'visible'
+                    : 'hidden'}"
+            >
+                <h3>{technique.name}</h3>
+                <div class="expanded-description">
+                    <h3>How does it work?</h3>
+                    <p>{technique.shortDescriptionPlainText}</p>
                 </div>
             </section>
-        </div>
-        <section class="technique-item text-container-long {expanded ? 'visible' : 'hidden'}">
-            <h3>{technique.name}</h3>
-            <div class="expanded-description">
-                <h3>How does it work?</h3>
-                <p>{technique.shortDescriptionPlainText}</p>
-            </div>
-        </section>
-    </a>
-</li>
+        </a>
+    </li>
 {/if}
 
-<style>
+<style lang="scss">
     li {
         display: flex;
         flex-flow: row wrap;
@@ -103,44 +127,62 @@
         border-radius: 0.5rem;
         background-color: rgb(var(--color-background-primary));
         color: white;
-        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        box-shadow:
+            0 1px 3px 0 rgb(0 0 0 / 0.1),
+            0 1px 2px -1px rgb(0 0 0 / 0.1);
         transition:
             transform 0.25s,
             box-shadow 0.2s,
             border-image-source 1s;
     }
     .full:hover {
-        box-shadow: 0 1px 3px 0 rgb(var(--color-primary)), 0 1px 2px -1px rgb(var(--color-primary));
+        box-shadow:
+            0 1px 3px 0 rgb(var(--color-primary)),
+            0 1px 2px -1px rgb(var(--color-primary));
     }
     .full:has(.full-width-image) {
-        border-image-source: linear-gradient(to left,#d53a9d, #743ad5);
+        border-image-source: linear-gradient(to left, #d53a9d, #743ad5);
     }
     .slim a {
-        all: unset;
+        text-decoration: none;
+        color: unset;
         width: 100%;
         cursor: pointer;
     }
-    .slim:has(a[aria-disabled=false]):hover {
+    .slim:has(a[aria-disabled="false"]):hover {
         transform: scale(1.02);
     }
-    .slim a[aria-disabled=true] {
+    .slim a[aria-disabled="true"] {
         pointer-events: none;
         background-color: rgb(var(--color-primary));
-        color: rgb(var(--color-on-primary))
+        color: rgb(var(--color-on-primary));
     }
     .top-container {
         display: flex;
         flex-flow: row nowrap;
         width: 100%;
+        height: 15rem;
         overflow: hidden;
+    }
+    .top-container {
+        height: 15rem;
     }
     .full-width-image {
         width: 100%;
-        height: 10rem;
     }
     .half-width-image {
-        width: 50%;
-        height: 10rem;
+        width: 40%;
+    }
+    @media (min-width: $breakpoint-md) {
+        .half-width-image {
+            width: 50%;
+        }
+        .slim .top-container {
+            height: 12.5rem;
+        }
+        .text-container-short {
+            width: 50%;
+        }
     }
     [class*="text-container"] {
         display: flex;
@@ -150,8 +192,8 @@
     }
     .text-container-short {
         transition: width 0.3s ease-in;
-        width: 50%;
-        height: 10rem;
+        width: 60%;
+        height: 100%;
     }
     .text-container-short.hidden {
         width: 0;
@@ -163,10 +205,14 @@
     .text-container-short-content {
         padding: 1rem;
     }
+    .text-container-short-content p {
+        padding-right: 0.5rem;
+        overflow-y: auto;
+    }
     .text-container-long {
         width: 100%;
         transition: all 0.3s ease-in;
-        height: 20rem;
+        height: 25rem;
         padding: 1rem;
     }
     .text-container-long.hidden {
@@ -174,6 +220,14 @@
         height: 0;
         padding-top: 0;
         padding-bottom: 0;
+    }
+    .expanded-description {
+        margin: 1rem 0;
+        overflow-y: auto;
+        padding-right: 1rem;
+    }
+    :global(.expanded-description li) {
+        margin: 0.5rem 0;
     }
     .image-container {
         transition: all 0.3s ease-in;

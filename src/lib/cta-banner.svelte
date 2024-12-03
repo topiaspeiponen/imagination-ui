@@ -10,19 +10,9 @@
     <p>
         Improve your images with a suite of image processing methods
     </p>
-    <Button
-        label="Start editing"
-        buttonAttributes={{
-            style: 
-                `
-                    animation: 0.5s ease-in 0.75s fadeInUp forwards;
-                    opacity: 0;
-                `
-        }}
-    />
 </header>
 
-<style>
+<style lang="scss">
     header {
         display: flex;
         flex-flow: column nowrap;
@@ -30,6 +20,12 @@
         background-color: rgb(var(--color-background-primary));
         padding-left: 5rem;
         padding-right: 5rem;
+        padding-top: 3rem;
+    }
+    @media (min-width: $breakpoint-md) {
+        header {
+            padding-top: 2rem;
+        }
     }
     h1 {
         color: rgb(var(--color-on-background-primary));
