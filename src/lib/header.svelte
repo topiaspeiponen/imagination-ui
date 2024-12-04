@@ -48,6 +48,7 @@
         border-bottom: 1px solid rgb(var(--color-primary-accent));
         box-sizing: border-box;
         height: var(--header-height);
+        z-index: 10;
     }
     header span {
         position: absolute;

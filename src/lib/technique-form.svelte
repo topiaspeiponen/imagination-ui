@@ -312,13 +312,19 @@
         </form>
         <div class="image-edit-area">
             {#if uploadedImg}
-                <div class="image-container">
-                    <ModalImage image={uploadedImg} alt="test" />
+                <div class="image-title-container">
+                    <h4>Original image</h4>
+                    <div class="image-container">
+                        <ModalImage image={uploadedImg} alt="test" />
+                    </div>
                 </div>
             {/if}
             {#if imgData && !loading}
-                <div class="image-container">
-                    <ModalImage image={imgData} alt="test" />
+                <div class="image-title-container">
+                    <h4>Processed image</h4>
+                    <div class="image-container">
+                        <ModalImage image={imgData} alt="test" />
+                    </div>
                 </div>
             {/if}
             {#if error && !loading}
@@ -360,13 +366,37 @@
     :global(.technique-description li) {
         margin: 0.5rem 0;
     }
-           
+    .loader-container {
+        display: flex;
+        margin-top: 4rem;
+        justify-content: center;
+        width: 100%;
+    }
     .image-edit-area {
         display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        gap: 1rem;
+        align-items: start;
+        flex-flow: column nowrap;
+        gap: 2rem;
         margin-top: 2rem;
+    }
+    .image-title-container {
+        display: flex;
+        gap: 1rem;
+        flex-flow: column nowrap;
+    }
+    @media (min-width: $breakpoint-md) {
+        .image-edit-area {
+            flex-flow: row nowrap;
+            gap: 2rem;
+        }
+        .loader-container {
+            justify-content: center;
+            margin: auto;
+            width: 50%;
+        }
+        .image-title-container {
+            width: 50%;
+        }
     }
     form {
         display: flex;
@@ -401,14 +431,6 @@
     input::-webkit-file-upload-button:active {
         background-color: rgba(var(--color-secondary), 0.75);
     }
-    .image-container {
-        width: 50%;
-    }
-    .loader-container {
-        display: flex;
-        justify-content: center;
-        width: 50%;
-    }
     .error-container {
         display: flex;
         flex-flow: column nowrap;
@@ -434,11 +456,5 @@
         flex-flow: column nowrap;
         gap: 0.5rem;
         width: fit-content;
-    }
-
-    @media (min-width: $breakpoint-md) {
-        .image-edit-area {
-            gap: 2rem;
-        }
     }
 </style>

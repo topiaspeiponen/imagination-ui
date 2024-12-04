@@ -29,13 +29,13 @@ The backend for this app can be seen at https://github.com/topiaspeiponen/imagin
 
 There are a few ways to preview the production build, depending on how extensively you wish to mimic production.
 
-1. Local production build with Vite
+### 1. Local production build with Vite
 
 Create a production version of your app:
 ```npm run build```
 You can preview the production build with `npm run preview`, which uses Vite.
 
-2. Local production build with Node
+### 2. Local production build with Node
 
 First make sure you have a ```.env.production``` file with appropriate values.
 
@@ -45,7 +45,8 @@ Create a production version of your app:
 Run the app using a Node server
 ```ORIGIN=http://localhost:3000 node --env-file=.env.production build```
 
-3. Production build using Docker
+### 3. Production build using Docker
+
 - Requires Docker Desktop
 
 1. Build the container
@@ -59,5 +60,7 @@ Run the app using a Node server
 3. Run the container 
 
 ```docker run -p 3000:3000 --env-file .env.production -d imagination-ui-image```
+
 or with network
+
 ```docker run --network=my-network -p 3000:3000 --env-file .env.production -d imagination-ui-image```

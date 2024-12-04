@@ -38,6 +38,8 @@
 </dialog>
 
 <style lang="scss">
+    @use '../global.scss' as *;
+
     figure {
         all: unset;
         display: block;
@@ -60,10 +62,16 @@
         transition: all 0.3s;
     }
     figure img {
-        width: 100%;
         border: 1px solid black;
         transition: all 0.3s;
         backface-visibility: hidden;
+        object-fit: cover;
+        max-width: 100%;
+    }
+    @media (min-width: $breakpoint-md) {
+        figure img {
+            width: 100%;
+        }
     }
     dialog {
         width: 80%;
