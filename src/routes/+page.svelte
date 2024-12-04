@@ -13,6 +13,7 @@
 </main>
 
 <style lang="scss">
+    @use '../global.scss' as *;
     main {
         display: flex;
         flex-direction: column;

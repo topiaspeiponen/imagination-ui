@@ -27,7 +27,7 @@
         tabindex="-1"
         on:click={() => sideMenuOpen = false}
         on:keydown={() => sideMenuOpen = false}
-        transition:fade={{duration: 250}}/>
+        transition:fade={{duration: 250}}></div>
     {/if}
     <section>
     {#if data.id}
@@ -37,6 +37,8 @@
 </main>
 
 <style lang="scss">
+    @use '../../../global.scss' as *;
+
     main {
         display: flex;
         margin-bottom: 4rem;

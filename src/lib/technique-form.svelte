@@ -17,13 +17,12 @@
     import { filterMaskFormSchema } from "./validation-schemas";
     import type { SubmitFunction } from "@sveltejs/kit";
 
-    export let title: string;
-    export let description: string;
-    export let techniqueId: ImageProcessingTechnique;
-    let uploadedImg: string | undefined = undefined;
-    let imgData: string | undefined = undefined;
-    let loading = false;
-    let error = false;
+    let { title, description, techniqueId } : { title: string, description: string, techniqueId: ImageProcessingTechnique} = $props();
+
+    let uploadedImg = $state<string | undefined>();
+    let imgData = $state<string | undefined>();
+    let loading = $state<boolean>(false);
+    let error = $state<boolean>(false);
 
     const cornerHandlingOptions: SelectOption = {
         mirror: "Mirror",
@@ -37,7 +36,29 @@
         mean: "Mean",
     };
 
-    let form: SvelteFormData<FilterMaskForm>;
+    let form = $state<SvelteFormData<FilterMaskForm>>({
+            values: {
+                mask_width: 3,
+                mask_height: 3,
+                corner_handling: cornerHandlingOptions.fit,
+                filter_type: filterTypeOptions.median,
+                corner_handling_select: writable({
+                    label: cornerHandlingOptions.mirror,
+                    value:
+                        Object.keys(cornerHandlingOptions).find(
+                            (key) => key === "mirror",
+                        ) || "",
+                }),
+                filter_type_select: writable({
+                    label: filterTypeOptions.median,
+                    value:
+                        Object.keys(filterTypeOptions).find(
+                            (key) => key === "median",
+                        ) || "",
+                }),
+            },
+            errors: {},
+        });
 
     const resetForm = () => {
         form = {
@@ -172,6 +193,7 @@
     ) {
         uploadedImg = undefined;
         imgData = undefined;
+        error = false;
     }
 </script>
 
@@ -199,7 +221,7 @@
                             max="15"
                             required
                             bind:value={form.values["mask_width"]}
-                            on:input={(element) => {
+                            oninput={(element) => {
                                 form = {
                                     ...form,
                                     values: {
@@ -226,7 +248,7 @@
                             max="15"
                             required
                             bind:value={form.values["mask_height"]}
-                            on:input={(element) => {
+                            oninput={(element) => {
                                 form = {
                                     ...form,
                                     values: {
@@ -268,9 +290,10 @@
             {/if}
             <input
                 type="file"
+                accept="image/png, image/jpeg"
                 id="image"
                 name="image"
-                on:change={(e) => imageUploaded(e)}
+                onchange={(e) => imageUploaded(e)}
                 required
             />
             <Button
@@ -318,6 +341,8 @@
 {/key}
 
 <style lang="scss">
+    @use '../global.scss' as *;
+
     input {
         padding: 0.5rem;
         border: 1px solid white;
@@ -340,7 +365,7 @@
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        gap: 4rem;
+        gap: 1rem;
         margin-top: 2rem;
     }
     form {
@@ -377,12 +402,12 @@
         background-color: rgba(var(--color-secondary), 0.75);
     }
     .image-container {
-        max-width: 300px;
+        width: 50%;
     }
     .loader-container {
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 50%;
     }
     .error-container {
         display: flex;
@@ -412,13 +437,8 @@
     }
 
     @media (min-width: $breakpoint-md) {
-        .image-container {
-            max-width: 300px;
-        }
-    }
-    @media (min-width: $breakpoint-xl) {
-        .image-container {
-            max-width: 400px;
+        .image-edit-area {
+            gap: 2rem;
         }
     }
 </style>

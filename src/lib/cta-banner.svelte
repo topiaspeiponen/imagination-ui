@@ -13,6 +13,8 @@
 </header>
 
 <style lang="scss">
+    @use '../global.scss' as *;
+
     header {
         display: flex;
         flex-flow: column nowrap;

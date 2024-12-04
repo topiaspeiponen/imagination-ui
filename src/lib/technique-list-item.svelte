@@ -118,6 +118,8 @@
 {/if}
 
 <style lang="scss">
+    @use '../global.scss' as *;
+
     li {
         display: flex;
         flex-flow: row wrap;
